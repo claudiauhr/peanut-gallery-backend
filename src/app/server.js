@@ -41,9 +41,20 @@ const bindMiddleware = () => {
  */
 const bindDatabase = () => {
 
-    WEB_SERVER.listen(PORT, () => {
+    Mongoose.set('strictQuery', true);
 
-        console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`)
+    Mongoose.connect(DATABASE_URI);
+
+    Mongoose.connection.on('error', error => console.log(`${APP_NAME} - an error has occured while connecting to MongoDB: ${error.message}...`));
+
+    Mongoose.connection.on('connected', () => {
+
+        console.log(`${APP_NAME} - mongoDB successfully connected on ${Mongoose.connection.port}...`)
+
+        WEB_SERVER.listen(PORT, () => {
+
+            console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`)
+        });
     });
 }
 
