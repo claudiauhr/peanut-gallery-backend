@@ -51,4 +51,9 @@ const TRIVIA_SCHEMA = new Schema({
             }
         }
     ]
-});
+}, { timestamps: true, collection: 'triviaSets' });
+
+/**
+ * Exports the schema model for use in APIHandler's.
+ */
+export const TRIVIA_MODEL = Mongoose.model('peanutGallery', TRIVIA_SCHEMA);
