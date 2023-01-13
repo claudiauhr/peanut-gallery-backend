@@ -22,7 +22,7 @@ const { PORT, DATABASE_URI, APP_NAME } = process.env;
  */
 const bindRoutes = () => {
 
-
+    console.log(`${APP_NAME} - successfully bound routes...`)
 }
 
 /**
@@ -30,7 +30,10 @@ const bindRoutes = () => {
  */
 const bindMiddleware = () => {
 
+    // Sets the middleware for parsing json content.
+    WEB_SERVER.use(Express.json());
 
+    console.log(`${APP_NAME} - successfully bound middleware...`)
 }
 
 /**
@@ -38,7 +41,10 @@ const bindMiddleware = () => {
  */
 const bindDatabase = () => {
 
+    WEB_SERVER.listen(PORT, () => {
 
+        console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`)
+    });
 }
 
 /**
