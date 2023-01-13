@@ -1,9 +1,28 @@
 import Mongoose from 'mongoose';
 
+/**
+ * Used for abstraction, APIHandler is a worker for wrapping
+ * mongoose methods and referencing them with the passed constructor {Mongoose.Model}.
+ * 
+ * @function handleCreate(),handleRead(),handleUpdate(),handleDelete()
+ * 
+ * All handle methods require implementation of extended APIHandler.
+ */
 export class APIHandler {
 
+    /**
+     * APIHandler constructor must be passed a valid mongoose model containing
+     * a schema otherwise an error will be thrown for invalidation.
+     * 
+     * @param {*} model mongoose schema model can only be passed here.
+     */
     constructor (model) {
+        
+        if (!model || !(model.schema instanceof Mongoose.Schema)) {
+            throw (new Error (`APIHandler - class ${this.constructor.name} must pass a mongoose Schema model to the constructor!`));
+        }
 
+        this.MODEL = model;
     }
 
     /**
