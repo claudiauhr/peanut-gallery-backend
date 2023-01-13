@@ -17,7 +17,7 @@ export class APIHandler {
      * @param {*} model mongoose schema model can only be passed here.
      */
     constructor (model) {
-        
+
         if (!model || !(model.schema instanceof Mongoose.Schema)) {
             throw (new Error (`APIHandler - class ${this.constructor.name} must pass a mongoose Schema model to the constructor!`));
         }
@@ -83,9 +83,32 @@ export class APIHandler {
      * @param {*} request 
      * @param {*} response 
      */
-      handleUpdate = (request, response) => {
+    handleUpdate = (request, response) => {
 
         throw new Error(`Error: handleUpdate() must be implemented for APIHandler -> ${this.constructor.name} abstraction!`);
+    }
+
+    /**
+     * Utility method for checking if an object is empty.
+     * 
+     * @param {*} obj 
+     * @returns true if 0 length
+     */
+    #objectEmpty = (obj) => {
+
+        return Object.keys(obj).length === 0;
+    }
+    
+    /**
+     * Utility method for checking if an object is of the same type passed.
+     * 
+     * @param {*} obj 
+     * @param {*} type to check
+     * @returns true if {obj} is of same {type}
+     */
+    #sameType = (obj, type) => {
+
+        return (typeof obj === type);
     }
 
 }
