@@ -6,6 +6,19 @@ export class APIHandler {
 
     }
 
+    /**
+     * Default handler method for a get request on root API routes.
+     * 
+     * @param {*} request 
+     * @param {*} response 
+     */
+    static handleDefault = (request, response) => {
+
+        response.json({
+            error: 'This is not a valid API route!'
+        })
+    }
+
     handleCreate = (request, response) => {
 
     }
@@ -19,7 +32,7 @@ export class APIHandler {
     }
 
     handleDelete = (request, response) => {
-        
+
     }
 
 }
