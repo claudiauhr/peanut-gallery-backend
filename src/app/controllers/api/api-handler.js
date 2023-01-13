@@ -29,7 +29,7 @@ export class APIHandler {
      */
     handleCreate = (request, response) => {
 
-        throw new Error(`Error: handleUpload() must be implemented for APIHandler -> ${this.constructor.name} abstraction!`);
+        throw new Error(`Error: handleCreate() must be implemented for APIHandler -> ${this.constructor.name} abstraction!`);
     }
 
     /**
@@ -55,7 +55,18 @@ export class APIHandler {
      */
     handleRead = (request, response) => {
 
-        throw new Error(`Error: handleGet() must be implemented for APIHandler -> ${this.constructor.name} abstraction!`);
+        throw new Error(`Error: handleRead() must be implemented for APIHandler -> ${this.constructor.name} abstraction!`);
+    }
+
+    /**
+     * Handles a request for editing an existing document.  Forced abstraction of {APIHandler} implementation.
+     * 
+     * @param {*} request 
+     * @param {*} response 
+     */
+      handleUpdate = (request, response) => {
+
+        throw new Error(`Error: handleUpdate() must be implemented for APIHandler -> ${this.constructor.name} abstraction!`);
     }
 
 }
