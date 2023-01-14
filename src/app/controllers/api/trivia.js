@@ -14,6 +14,14 @@ class Trivia extends APIHandler {
         response.json(TRIVIA_SET);
     }
 
+    handleDelete = async (request, response) => {
+
+        const ID = request.params.id;
+        const DELETED_TRIVIA_SET = await this.deleteById(ID);
+
+        response.json(DELETED_TRIVIA_SET);
+    }
+
 }
 
 export default new Trivia(TRIVIA_MODEL);
