@@ -1,6 +1,7 @@
 import Express from 'express';
 import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
+import { ROUTES as CREATE_ROUTER } from './routes/create.js';
 
 /**
  * Express instance reference for the API.
@@ -21,6 +22,9 @@ const { PORT, DATABASE_URI, APP_NAME } = process.env;
  * Binds the routes to the application running state.
  */
 const bindRoutes = () => {
+
+    // Sets the router for API creation calls.
+    WEB_SERVER.use('/c', CREATE_ROUTER());
 
     console.log(`${APP_NAME} - successfully bound routes...`)
 }
