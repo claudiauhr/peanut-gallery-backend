@@ -30,6 +30,14 @@ class Trivia extends APIHandler {
         response.json(TRIVIA_SET);
     }
 
+    handleUpdate = async (request, response) => {
+
+        const ID = request.params.id;
+        const EDITED_TRIVIA_SET = await this.edit(ID, request.body);
+
+        response.json(EDITED_TRIVIA_SET);
+    }
+
 }
 
 export default new Trivia(TRIVIA_MODEL);
