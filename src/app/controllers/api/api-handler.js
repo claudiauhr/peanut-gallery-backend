@@ -89,6 +89,22 @@ export class APIHandler {
     }
 
     /**
+     * Creates a new mongoDB document entry.
+     * 
+     * @param {*} data  the data to submit to the document.
+     * @param {*} callback optional callback.
+     * @returns mongoose creation result.
+     */
+    create = async (data, callback) => {
+
+        const result = await this.MODEL.create(data).catch((error) => (error));
+
+        if (this.#sameType(callback, 'function')) callback(result);
+
+        return result;
+    }
+
+    /**
      * Utility method for checking if an object is empty.
      * 
      * @param {*} obj 
