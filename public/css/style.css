@@ -27,8 +27,16 @@ h1 {
 }
 
 code {
-    max-width: 100px;
     word-wrap: break-word;
+    overflow: scroll;
+}
+
+code::-webkit-scrollbar {
+    display: none;
+}
+
+p {
+    text-align: center;
 }
 
 #content-container {
@@ -40,10 +48,12 @@ code {
 }
 
 .test-wrapper {
-    min-width: 200px;
-    min-height: 200px;
-    max-width: 300px;
-    max-height: 300px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    max-width: 250px;
+    max-height: 250px;
     border-radius: 10px;
     padding: 20px;
     background-color: rgb(255, 255, 255);

@@ -1,6 +1,8 @@
 import Express from 'express';
 import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
+import Http from 'http';
+import { Server as SocketServer } from 'socket.io';
 import { ROUTES as CREATE_ROUTER } from './routes/create.js';
 import { ROUTES as READ_ROUTER} from './routes/read.js';
 import { ROUTES as UPDATE_ROUTER } from './routes/update.js';
@@ -9,7 +11,13 @@ import { ROUTES as DELETE_ROUTER } from './routes/delete.js';
 /**
  * Express instance reference for the API.
  */
-const WEB_SERVER = Express();
+const APPLICATION = Express();
+
+/**
+ * Creates the http server using the express application.
+ * This allows Socket.io to use the same port connection.
+ */
+const WEB_SERVER = Http.createServer(APPLICATION);
 
 /**
  * Configure environmental variables.
@@ -27,13 +35,13 @@ const { PORT, DATABASE_URI, APP_NAME } = process.env;
 const bindRoutes = () => {
 
     // Sets the router for API creation calls
-    WEB_SERVER.use('/c', CREATE_ROUTER());
+    APPLICATION.use('/c', CREATE_ROUTER());
     // Sets the router for API read calls
-    WEB_SERVER.use('/r', READ_ROUTER());
+    APPLICATION.use('/r', READ_ROUTER());
     // Sets the router for API update calls
-    WEB_SERVER.use('/u', UPDATE_ROUTER());
+    APPLICATION.use('/u', UPDATE_ROUTER());
     // Sets the router for API delete calls
-    WEB_SERVER.use('/d', DELETE_ROUTER());
+    APPLICATION.use('/d', DELETE_ROUTER());
 
     console.log(`${APP_NAME} - successfully bound routes...`)
 }
@@ -44,7 +52,7 @@ const bindRoutes = () => {
 const bindMiddleware = () => {
 
     // Sets the middleware for parsing json content.
-    WEB_SERVER.use(Express.json());
+    APPLICATION.use(Express.json());
 
     console.log(`${APP_NAME} - successfully bound middleware...`)
 }
@@ -67,8 +75,32 @@ const bindDatabase = () => {
         WEB_SERVER.listen(PORT, () => {
 
             console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`)
+            bindSocketIO();
         });
     });
+}
+
+const bindSocketIO = () => {
+
+    const IO = new SocketServer(WEB_SERVER);
+
+    // Allows access to the public folder.
+    APPLICATION.use(Express.static('public'));
+
+    APPLICATION.get('/', (request, response) => {
+        response.sendFile('/public/index.html');
+    });
+
+    IO.on('connection', (socket) => {
+        console.log('A new user connection was detected!');
+        socket.emit('user connect', 'Connection Established!');
+
+        socket.on('ping', () => {
+            socket.emit('pong', 'pong');
+        });
+    });
+
+    console.log(`${APP_NAME} - successfully attached socket.io to port ${PORT}...`)
 }
 
 /**
