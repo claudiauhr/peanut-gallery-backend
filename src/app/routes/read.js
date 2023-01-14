@@ -2,16 +2,16 @@ import Express from "express";
 import { APIHandler } from "../controllers/api/api-handler.js";
 
 /**
- * Defines the create(post) router reference.
+ * Defines the read(get) API router.
  */
-const CREATE_ROUTER = Express.Router();
+const READ_ROUTER = Express.Router();
 
 /**
  * Sets the route handlers and returns the router instance
  */
 export const ROUTES = () => {
 
-    CREATE_ROUTER.post('/', APIHandler.handleDefault);
+    READ_ROUTER.get('/', APIHandler.handleDefault);
 
-    return CREATE_ROUTER;
+    return READ_ROUTER;
 }

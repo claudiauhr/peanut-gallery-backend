@@ -2,6 +2,7 @@ import Express from 'express';
 import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
 import { ROUTES as CREATE_ROUTER } from './routes/create.js';
+import { ROUTES as READ_ROUTER} from './routes/read.js';
 
 /**
  * Express instance reference for the API.
@@ -23,8 +24,10 @@ const { PORT, DATABASE_URI, APP_NAME } = process.env;
  */
 const bindRoutes = () => {
 
-    // Sets the router for API creation calls.
+    // Sets the router for API creation calls
     WEB_SERVER.use('/c', CREATE_ROUTER());
+    // Sets the router for API read calls
+    WEB_SERVER.use('/r', READ_ROUTER());
 
     console.log(`${APP_NAME} - successfully bound routes...`)
 }
