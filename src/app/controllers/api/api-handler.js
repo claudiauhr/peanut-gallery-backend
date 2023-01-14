@@ -137,6 +137,33 @@ export class APIHandler {
     }
 
     /**
+     * Locates a document by id if it exists and edits the document
+     * based on the passed object {to}.
+     * 
+     * @param {*} id the id of the document.
+     * @param {*} to the key/value pairs to update.
+     * @param {*} callback optional callback.
+     * @returns result of document edit.
+     */
+    edit = async (id, to, callback) => { 
+
+        if (!this.#sameType(to, 'object')) {
+
+            throw new Error(`Error: argument 'to' in APIHandler.update -> ${this.constructor.name} is not of type Object!`);
+
+        } else if (this.#objectEmpty(to)) {
+
+            return ( { message: `argument 'to' in APIHandler.update -> ${this.constructor.name} cannot have empty properties!` } );
+        }
+
+        const result = await this.MODEL.findByIdAndUpdate(id, to, { new: true }).catch((error) => (error));
+
+        if (this.#sameType(callback, 'function')) callback(result);
+
+        return result === null ? { message: `_id: ${id} not found for model '${this.MODEL.collection.collectionName}'` } : result;
+    }
+
+    /**
      * Utility method for checking if an object is empty.
      * 
      * @param {*} obj 
