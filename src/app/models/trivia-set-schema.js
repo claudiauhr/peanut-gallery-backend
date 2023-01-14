@@ -8,7 +8,7 @@ const Schema = Mongoose.Schema;
 /**
  * MongoDB document model schema.
  */
-const TRIVIA_SCHEMA = new Schema({
+const TRIVIA_SET_SCHEMA = new Schema({
 
     title: {
         type: String,
@@ -56,4 +56,4 @@ const TRIVIA_SCHEMA = new Schema({
 /**
  * Exports the schema model for use in APIHandler's.
  */
-export const TRIVIA_MODEL = Mongoose.model('peanutGallery', TRIVIA_SCHEMA);
+export const TRIVIA_MODEL = Mongoose.model('peanutGallery', TRIVIA_SET_SCHEMA);
