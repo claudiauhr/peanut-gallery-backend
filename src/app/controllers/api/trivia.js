@@ -22,6 +22,14 @@ class Trivia extends APIHandler {
         response.json(DELETED_TRIVIA_SET);
     }
 
+    handleRead = async (request, response) => {
+
+        const ID = request.params.id;
+        const TRIVIA_SET = await this.findById(ID);
+
+        response.json(TRIVIA_SET);
+    }
+
 }
 
 export default new Trivia(TRIVIA_MODEL);
