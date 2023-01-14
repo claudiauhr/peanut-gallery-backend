@@ -105,6 +105,22 @@ export class APIHandler {
     }
 
     /**
+     * Deletes a document entry by id.
+     * 
+     * @param {*} id  the id of the document.
+     * @param {*} callback optional callback.
+     * @returns mongoose deletion result.
+     */
+    deleteById = async (id, callback) => {
+
+        const result = await this.MODEL.deleteOne({_id: id}).catch((error) => (error));
+
+        if (this.#sameType(callback, 'function')) callback(result);
+
+        return result;
+    }
+
+    /**
      * Utility method for checking if an object is empty.
      * 
      * @param {*} obj 
