@@ -105,6 +105,22 @@ export class APIHandler {
     }
 
     /**
+     * Locates a document by id if it exists.
+     * 
+     * @param {*} id the id of the document.
+     * @param {*} callback optional callback.
+     * @returns mongoose result.
+     */
+    findById = async (id, callback) => {
+
+        const result = await this.MODEL.findById({_id: id}).catch((error) => (error));
+
+        if (this.#sameType(callback, 'function')) callback(result);
+
+        return result === null ? { message: `_id: ${id} not found for model '${this.MODEL.collection.collectionName}'` } : result;
+    }
+
+    /**
      * Deletes a document entry by id.
      * 
      * @param {*} id  the id of the document.
