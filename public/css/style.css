@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@100&family=Inconsolata&family=Lacquer&family=Montserrat+Alternates:wght@300&display=swap');
+
+:root {
+    --phantom-font-flat: 'Montserrat Alternates', sans-serif;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(55, 40, 96);
+}
+
+h1 {
+    margin: 1em;
+    font-family: var(--phantom-font-flat);
+    color: white;
+}
+
+code {
+    word-wrap: break-word;
+    overflow: scroll;
+}
+
+code::-webkit-scrollbar {
+    display: none;
+}
+
+p {
+    text-align: center;
+}
+
+#content-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.test-wrapper {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+}
