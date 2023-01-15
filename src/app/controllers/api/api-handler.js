@@ -1,4 +1,5 @@
 import Mongoose from 'mongoose';
+import Obj from '../../utils/obj.js';
 
 /**
  * Used for abstraction, APIHandler is a worker for wrapping
@@ -99,7 +100,7 @@ export class APIHandler {
 
         const result = await this.MODEL.create(data).catch((error) => (error));
 
-        if (this.#sameType(callback, 'function')) callback(result);
+        if (Obj.equals(callback, 'function')) callback(result);
 
         return result;
     }
@@ -115,7 +116,7 @@ export class APIHandler {
 
         const result = await this.MODEL.findById({_id: id}).catch((error) => (error));
 
-        if (this.#sameType(callback, 'function')) callback(result);
+        if (Obj.equals(callback, 'function')) callback(result);
 
         return result === null ? { message: `_id: ${id} not found for model '${this.MODEL.collection.collectionName}'` } : result;
     }
@@ -131,7 +132,7 @@ export class APIHandler {
 
         const result = await this.MODEL.deleteOne({_id: id}).catch((error) => (error));
 
-        if (this.#sameType(callback, 'function')) callback(result);
+        if (Obj.equals(callback, 'function')) callback(result);
 
         return result;
     }
@@ -147,43 +148,19 @@ export class APIHandler {
      */
     edit = async (id, to, callback) => { 
 
-        if (!this.#sameType(to, 'object')) {
+        if (Obj.equals(to, 'object')) {
 
             throw new Error(`Error: argument 'to' in APIHandler.update -> ${this.constructor.name} is not of type Object!`);
 
-        } else if (this.#objectEmpty(to)) {
+        } else if (Obj.empty(to)) {
 
             return ( { message: `argument 'to' in APIHandler.update -> ${this.constructor.name} cannot have empty properties!` } );
         }
 
         const result = await this.MODEL.findByIdAndUpdate(id, to, { new: true }).catch((error) => (error));
 
-        if (this.#sameType(callback, 'function')) callback(result);
+        if (Obj.equals(callback, 'function')) callback(result);
 
         return result === null ? { message: `_id: ${id} not found for model '${this.MODEL.collection.collectionName}'` } : result;
     }
-
-    /**
-     * Utility method for checking if an object is empty.
-     * 
-     * @param {*} obj 
-     * @returns true if 0 length
-     */
-    #objectEmpty = (obj) => {
-
-        return Object.keys(obj).length === 0;
-    }
-    
-    /**
-     * Utility method for checking if an object is of the same type passed.
-     * 
-     * @param {*} obj 
-     * @param {*} type to check
-     * @returns true if {obj} is of same {type}
-     */
-    #sameType = (obj, type) => {
-
-        return (typeof obj === type);
-    }
-
 }

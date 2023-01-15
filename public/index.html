@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/style.css">
+        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+        <script defer>
+            const SOCKET = io();
+
+            let p = document.createElement('p');
+
+            SOCKET.on('user connect', (message) => {
+                const connectedParagraph = document.createElement('p');
+                connectedParagraph.textContent = message;
+
+                document.getElementById('playground').appendChild(connectedParagraph);
+
+                SOCKET.emit('ping', 'ping');
+                p.textContent = 'ping'
+                document.getElementById('playground').appendChild(p);
+            })
+
+            SOCKET.on('pong', (message) => {
+                p.textContent += ` -> ${message}`;
+
+                document.getElementById('playground').append(p);
+
+                setTimeout(() => {
+                    SOCKET.emit('ping', 'ping');
+                    p = document.createElement('p');
+                    p.textContent = 'ping'
+                }, 3000)
+            })
+
+        </script>
+        <title>Socket Experiments</title>
+    </head>
+    <body>
+        <div id="content-container">
+            <div>
+                <h1>Experiment Playground</h1>
+            </div>
+            <div class="test-wrapper">
+                <code id="playground">
+
+                </code>
+            </div>
+        </div>
+    </body>
+</html>
