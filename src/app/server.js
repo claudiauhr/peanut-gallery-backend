@@ -2,7 +2,6 @@ import Express from 'express';
 import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
 import Http from 'http';
-import { Server as SocketServer } from 'socket.io';
 import { ROUTES as CREATE_ROUTER } from './routes/create.js';
 import { ROUTES as READ_ROUTER} from './routes/read.js';
 import { ROUTES as UPDATE_ROUTER } from './routes/update.js';
@@ -30,6 +29,16 @@ DotENV.config();
 const { PORT, DATABASE_URI, APP_NAME } = process.env;
 
 /**
+ * Binds general application configurations. If you don't know where to throw
+ * something, chances are it's here!
+ */
+const bindConfigurations = () => {
+
+    // Allows access to the public folder.
+    APPLICATION.use(Express.static('public'));
+}
+
+/**
  * Binds the routes to the application running state.
  */
 const bindRoutes = () => {
@@ -42,6 +51,11 @@ const bindRoutes = () => {
     APPLICATION.use('/u', UPDATE_ROUTER());
     // Sets the router for API delete calls
     APPLICATION.use('/d', DELETE_ROUTER());
+
+    // THIS IS AN EXPIREMENTAL ROUTE -- DELETE ON DEPLOYMENT
+    APPLICATION.get('/', (request, response) => {
+        response.sendFile('/public/index.html');
+    });
 
     console.log(`${APP_NAME} - successfully bound routes...`)
 }
@@ -74,33 +88,9 @@ const bindDatabase = () => {
 
         WEB_SERVER.listen(PORT, () => {
 
-            console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`)
-            bindSocketIO();
+            console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`);
         });
     });
-}
-
-const bindSocketIO = () => {
-
-    const IO = new SocketServer(WEB_SERVER);
-
-    // Allows access to the public folder.
-    APPLICATION.use(Express.static('public'));
-
-    APPLICATION.get('/', (request, response) => {
-        response.sendFile('/public/index.html');
-    });
-
-    IO.on('connection', (socket) => {
-        console.log('A new user connection was detected!');
-        socket.emit('user connect', 'Connection Established!');
-
-        socket.on('ping', () => {
-            socket.emit('pong', 'pong');
-        });
-    });
-
-    console.log(`${APP_NAME} - successfully attached socket.io to port ${PORT}...`)
 }
 
 /**
@@ -109,6 +99,7 @@ const bindSocketIO = () => {
 export const build = () => {
 
     // Don't reorder this, will break application.
+    bindConfigurations();
     bindMiddleware();
     bindRoutes();
     bindDatabase();
