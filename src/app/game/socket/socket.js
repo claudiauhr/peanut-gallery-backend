@@ -20,11 +20,17 @@ const bindConnectionListener = () => {
 
     SERVER_SOCKET.on('connection', socket => {
 
+        // Setup the ping pong...
         socket.emit('user connect', 'Successfully connected!');
+
+        socket.on('disconnect', (payload) => {
+            
+            getPackets()['disconnect'].handle(socket, payload);
+        })
 
         socket.onAny((packet, payload) => {
 
-            getPackets()[packet].handle(socket, payload)
+            getPackets()[packet].handle(socket, payload);
         })
     });
 }

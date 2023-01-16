@@ -14,5 +14,5 @@ class Ping extends Packet {
 
 export const get = () => {
 
-    return new Ping('ping')
+    return new Ping('ping');
 }

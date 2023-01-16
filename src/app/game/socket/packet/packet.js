@@ -25,6 +25,9 @@ export default class Packet {
     /**
      * Handles an event when an incoming packet matches. This abstract method
      * requires implementation.
+     * 
+     * @param socket the client socket connection.
+     * @param payload the packet data payload.
      */
     handle = (socket, payload) => {
 
