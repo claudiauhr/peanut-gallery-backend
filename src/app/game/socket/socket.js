@@ -1,5 +1,5 @@
 import { Server as ServerSocket } from 'socket.io';
-import { buildPackets, PACKETS } from './packet-handler.js';
+import { buildPackets, getPackets } from './packet-handler.js';
 
 /**
  * The {ServerSocket} instance.
@@ -24,7 +24,7 @@ const bindConnectionListener = () => {
 
         socket.onAny((packet, payload) => {
 
-            PACKETS[packet].handle(socket, payload)
+            getPackets()[packet].handle(socket, payload)
         })
     });
 }

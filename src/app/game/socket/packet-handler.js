@@ -3,7 +3,7 @@ import FILE_SYSTEM from 'fs';
 /**
  * Container object for packet data.
  */
-export const PACKETS = {};
+const PACKETS = {};
 
 /**
  * Holds the relative path to packets.
@@ -14,6 +14,13 @@ const PACKETS_PATH = './packets/';
  * Holds the absolute path to packets.
  */
 const ABSOLUTE_PACKETS_PATH = './src/app/game/socket/packets/';
+
+/**
+ * Getter for the PACKETS object.
+ * 
+ * @returns {PACKETS}
+ */
+export const getPackets = () => PACKETS;
 
 /**
  * Grabs and array containing packet file paths.
@@ -46,5 +53,5 @@ export const buildPackets = async () => {
         }
     }
 
-    console.log(`${process.env.APP_NAME} - successfully bound packets to socket listener...`)
+    console.log(`${process.env.APP_NAME} - successfully bound ${Object.keys(PACKETS).length} packets to socket listener...`)
 }
