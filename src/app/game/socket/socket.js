@@ -1,43 +1,46 @@
 import { Server as ServerSocket } from 'socket.io';
+import { buildPackets, PACKETS } from './packet-handler.js';
 
-class Socket {
+/**
+ * The {ServerSocket} instance.
+ */
+let SERVER_SOCKET = undefined;
 
-    SERVER_SOCKET = undefined;
+/**
+ * Get the ServerSocket instance for static access.
+ * 
+ * @returns {this.SERVER_SOCKET}
+ */
+const get = () => this.SERVER_SOCKET;
 
-    /**
-     * Get the ServerSocket instance for static access.
-     * 
-     * @returns {this.SERVER_SOCKET}
-     */
-    get = () => this.SERVER_SOCKET;
-    
-    /**
-     * Attaches the HTTP server to a new ServerSocket instance. This
-     * allows Socket to listen for incoming packet data on the same port.
-     * 
-     * @param {*} server {http}
-     * @returns {Socket} instance.
-     */
-    attach = (server) => {
-    
-        this.SERVER_SOCKET = new ServerSocket(server);
-    
-        return this;
-    }
+/**
+ * binds the connection listener to the {SERVER_SOCKET}.
+ */
+const bindConnectionListener = () => {
 
-    /**
-     * 
-     */
-    buildPackets = (appName) => {
+    SERVER_SOCKET.on('connection', socket => {
 
-        import('./packets/connection.js').then((packet) => {
-    
-            this.SERVER_SOCKET.on(packet.get().getPacketId(), packet.get().handle)
+        socket.emit('user connect', 'Successfully connected!');
+
+        socket.onAny((packet, payload) => {
+
+            PACKETS[packet].handle(socket, payload)
         })
-
-        console.log(`${appName} - successfully bound packets to socket listener...`)
-    }
-
+    });
 }
 
-export default (new Socket());
+/**
+ * Attaches the HTTP server to a new ServerSocket instance. This
+ * allows Socket to listen for incoming packet data on the same port.
+ * 
+ * @param {*} server {http}
+ * @returns {Socket} instance.
+ */
+export const attachSocket = async (server) => {
+
+    SERVER_SOCKET = new ServerSocket(server);
+
+    await buildPackets();
+
+    bindConnectionListener();
+}
