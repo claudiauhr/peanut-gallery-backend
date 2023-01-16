@@ -8,12 +8,12 @@ const PACKETS = {};
 /**
  * Holds the relative path to packets.
  */
-const PACKETS_PATH = './packets/';
+const PACKETS_PATH = './inbound/';
 
 /**
  * Holds the absolute path to packets.
  */
-const ABSOLUTE_PACKETS_PATH = './src/app/game/socket/packets/';
+const ABSOLUTE_PACKETS_PATH = './src/app/game/socket/packet/inbound';
 
 /**
  * Getter for the PACKETS object.

@@ -1,4 +1,4 @@
-import Obj from '../../utils/obj.js';
+import Obj from '../../../utils/obj.js';
 
 /**
  * A Packet represents a package of data meant to be transmitted

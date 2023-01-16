@@ -1,5 +1,5 @@
 import { Server as ServerSocket } from 'socket.io';
-import { buildPackets, getPackets } from './packet-handler.js';
+import { buildPackets, getPackets } from './packet/packet-handler.js';
 
 /**
  * The {ServerSocket} instance.
