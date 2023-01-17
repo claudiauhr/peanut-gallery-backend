@@ -16,23 +16,28 @@
                 connectedParagraph.textContent = message;
 
                 document.getElementById('playground').appendChild(connectedParagraph);
-
-                SOCKET.emit('ping', 'ping');
-                p.textContent = 'ping'
                 document.getElementById('playground').appendChild(p);
             })
 
-            SOCKET.on('pong', (message) => {
-                p.textContent += ` -> ${message}`;
+            SOCKET.onAny((packet, message) => {
 
+                if (packet == 'user connect') return;
+
+                p.textContent += ` -> ${message}`;
                 document.getElementById('playground').append(p);
 
-                setTimeout(() => {
-                    SOCKET.emit('ping', 'ping');
-                    p = document.createElement('p');
-                    p.textContent = 'ping'
-                }, 3000)
+                p = document.createElement('p');
             })
+
+            const sendPacket = () => {
+                const PACKET = document.getElementById('packet').value;
+                const PACKET_PAYLOAD = document.getElementById('packet_payload').value;
+
+                p.textContent += `${PACKET}`;
+                document.getElementById('playground').append(p);
+
+                SOCKET.emit(PACKET, PACKET_PAYLOAD);
+            }
 
         </script>
         <title>Socket Experiments</title>
@@ -44,8 +49,11 @@
             </div>
             <div class="test-wrapper">
                 <code id="playground">
-
+                    <!-- PACKET MESSAGES ARE SENT HERE -->
                 </code>
+                <input id="packet" type="text" placeholder="Packet ID">
+                <input id="packet_payload" type="text" placeholder="Packet Payload">
+                <input type="submit" value="Submit" onclick="sendPacket()">
             </div>
         </div>
     </body>

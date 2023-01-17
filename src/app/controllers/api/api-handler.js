@@ -100,7 +100,7 @@ export class APIHandler {
 
         const result = await this.MODEL.create(data).catch((error) => (error));
 
-        if (Obj.equals(callback, 'function')) callback(result);
+        if (Obj.is(callback, 'function')) callback(result);
 
         return result;
     }
@@ -116,7 +116,7 @@ export class APIHandler {
 
         const result = await this.MODEL.findById({_id: id}).catch((error) => (error));
 
-        if (Obj.equals(callback, 'function')) callback(result);
+        if (Obj.is(callback, 'function')) callback(result);
 
         return result === null ? { message: `_id: ${id} not found for model '${this.MODEL.collection.collectionName}'` } : result;
     }
@@ -132,7 +132,7 @@ export class APIHandler {
 
         const result = await this.MODEL.deleteOne({_id: id}).catch((error) => (error));
 
-        if (Obj.equals(callback, 'function')) callback(result);
+        if (Obj.is(callback, 'function')) callback(result);
 
         return result;
     }
@@ -148,7 +148,7 @@ export class APIHandler {
      */
     edit = async (id, to, callback) => { 
 
-        if (Obj.equals(to, 'object')) {
+        if (Obj.is(to, 'object')) {
 
             throw new Error(`Error: argument 'to' in APIHandler.update -> ${this.constructor.name} is not of type Object!`);
 
@@ -159,7 +159,7 @@ export class APIHandler {
 
         const result = await this.MODEL.findByIdAndUpdate(id, to, { new: true }).catch((error) => (error));
 
-        if (Obj.equals(callback, 'function')) callback(result);
+        if (Obj.is(callback, 'function')) callback(result);
 
         return result === null ? { message: `_id: ${id} not found for model '${this.MODEL.collection.collectionName}'` } : result;
     }
