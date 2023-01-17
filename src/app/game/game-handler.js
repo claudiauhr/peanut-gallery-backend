@@ -12,16 +12,14 @@ const GAME_SESSIONS = {}
  * @param {*} id represent the id of the game session.
  * @returns {Trivia} instance.
  */
-export const createGameSession = (id) => {
+export const createGameSession = (id, hostSocket, maxPlayers) => {
 
     if (id in GAME_SESSIONS) {
 
         return GAME_SESSIONS[id].get;
     }
 
-    const CREATED_GAME = new Trivia(id);
-
-    return (GAME_SESSIONS[id] = CREATED_GAME);
+    return (GAME_SESSIONS[id] = new Trivia(hostSocket, maxPlayers));
 }
 
 /**
