@@ -1,5 +1,5 @@
 import { Server as ServerSocket } from 'socket.io';
-import { buildPackets, getPackets } from './packet/packet-handler.js';
+import { buildPackets, getPacket, getPackets } from './packet/packet-handler.js';
 
 /**
  * The {ServerSocket} instance.
@@ -24,14 +24,14 @@ const bindConnectionListener = () => {
         socket.emit('user connect', 'Successfully connected!');
 
         socket.on('disconnect', (payload) => {
-            
-            getPackets()['disconnect'].handle(socket, payload);
-        })
+
+            getPacket('disconnect').handle(socket, payload);
+        });
 
         socket.onAny((packet, payload) => {
 
-            getPackets()[packet].handle(socket, payload);
-        })
+            getPacket(packet).handle(socket, payload, packet);
+        });
     });
 }
 

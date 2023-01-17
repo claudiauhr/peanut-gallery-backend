@@ -3,7 +3,13 @@ import FILE_SYSTEM from 'fs';
 /**
  * Container object for packet data.
  */
-const PACKETS = {};
+const PACKETS = {
+
+    "NOT_FOUND": {
+
+        handle: (socket, payload, packetId) => console.log(`Undefined packet: '${packetId}' was received and is not a valid packet!`)
+    }
+};
 
 /**
  * Holds the relative path to packets.
@@ -21,6 +27,18 @@ const ABSOLUTE_PACKETS_PATH = './src/app/game/socket/packet/inbound';
  * @returns {PACKETS}
  */
 export const getPackets = () => PACKETS;
+
+/**
+ * Getter for a specific  key/value packet pair. If the key does
+ * not exist, a default {NOT_FOUND} value will be returned.
+ * 
+ * @param {*} id 
+ * @returns 
+ */
+export const getPacket = id => {
+
+    return ((id in PACKETS) ? PACKETS[id] : PACKETS.NOT_FOUND)
+}
 
 /**
  * Grabs and array containing packet file paths.
