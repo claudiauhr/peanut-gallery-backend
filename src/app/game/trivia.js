@@ -43,11 +43,21 @@ export class Trivia {
         return true;
     }
 
+    /**
+     * Getter for the trivia schema...
+     * 
+     * @returns {triviaSchema}
+     */
     getTriviaSchema = () => {
 
         return this.#triviaSchema;
     }
 
+    /**
+     * Binds a trivia schema to the trivia game instance.
+     * 
+     * @param {*} triviaId 
+     */
     initilizeSchema = async (triviaId) => {
 
         this.triviaSchema =  await TriviaController.findById(triviaId);
