@@ -24,7 +24,7 @@ const bindConnectionListener = () => {
         socket.emit('user connect', 'Successfully connected!');
 
         socket.on('disconnect', (payload) => {
-
+            
             getPacket('disconnect').handle(socket, payload);
         });
 

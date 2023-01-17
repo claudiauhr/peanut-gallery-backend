@@ -7,6 +7,7 @@ import { ROUTES as READ_ROUTER} from './routes/read.js';
 import { ROUTES as UPDATE_ROUTER } from './routes/update.js';
 import { ROUTES as DELETE_ROUTER } from './routes/delete.js';
 import { attachSocket } from './game/socket/socket.js';
+import { createGameSession } from './game/game-handler.js';
 
 /**
  * Express instance reference for the API.
