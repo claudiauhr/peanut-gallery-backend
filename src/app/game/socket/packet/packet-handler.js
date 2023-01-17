@@ -7,7 +7,10 @@ const PACKETS = {
 
     "NOT_FOUND": {
 
-        handle: (socket, payload, packetId) => console.log(`Undefined packet: '${packetId}' was received and is not a valid packet!`)
+        handle: (socket, payload, packetId) => {
+            console.log(`Undefined packet: '${packetId}' was received from socket '${socket.id}' and is not a valid packet!`);
+            console.log(`Packet payload: ${payload}`);
+        }
     }
 };
 

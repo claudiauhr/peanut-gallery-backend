@@ -30,7 +30,7 @@ const bindConnectionListener = () => {
 
         socket.onAny((packet, payload) => {
 
-            getPacket(packet).handle(socket, payload, packet);
+            getPacket(packet.toLowerCase()).handle(socket, payload, packet);
         });
     });
 }
