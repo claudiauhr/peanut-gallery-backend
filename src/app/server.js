@@ -6,6 +6,7 @@ import { ROUTES as CREATE_ROUTER } from './routes/create.js';
 import { ROUTES as READ_ROUTER} from './routes/read.js';
 import { ROUTES as UPDATE_ROUTER } from './routes/update.js';
 import { ROUTES as DELETE_ROUTER } from './routes/delete.js';
+import { attachSocket } from './game/socket/socket.js';
 
 /**
  * Express instance reference for the API.
@@ -82,14 +83,13 @@ const bindDatabase = () => {
 
     Mongoose.connection.on('error', error => console.log(`${APP_NAME} - an error has occured while connecting to MongoDB: ${error.message}...`));
 
-    Mongoose.connection.on('connected', () => {
+    Mongoose.connection.on('connected', async () => {
 
-        console.log(`${APP_NAME} - mongoDB successfully connected on ${Mongoose.connection.port}...`)
+        console.log(`${APP_NAME} - successfully connected to mongoDB on ${Mongoose.connection.port}...`)
 
-        WEB_SERVER.listen(PORT, () => {
+        await attachSocket(WEB_SERVER);
 
-            console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`);
-        });
+        WEB_SERVER.listen(PORT, () => console.log(`${APP_NAME} - successfully listening for connections on port ${PORT}...`));
     });
 }
 
