@@ -12,14 +12,14 @@ const GAME_SESSIONS = {}
  * @param {*} id represent the id of the game session.
  * @returns {Trivia} instance.
  */
-export const createGameSession = (id, hostSocket, maxPlayers) => {
+export const createGameSession = async (id, hostSocket, maxPlayers) => {
 
     if (id in GAME_SESSIONS) {
 
         return GAME_SESSIONS[id].get;
     }
 
-    return (GAME_SESSIONS[id] = new Trivia(hostSocket, maxPlayers));
+    return (GAME_SESSIONS[id] = await Trivia.createInstance(hostSocket, maxPlayers, '63c6eeb8ce851d190f8ae82c'));
 }
 
 /**
