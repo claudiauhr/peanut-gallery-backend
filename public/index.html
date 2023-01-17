@@ -22,7 +22,7 @@
             SOCKET.onAny((packet, message) => {
 
                 if (packet == 'user connect') return;
-                
+
                 p.textContent += ` -> ${message}`;
                 document.getElementById('playground').append(p);
 
@@ -32,6 +32,9 @@
             const sendPacket = () => {
                 const PACKET = document.getElementById('packet').value;
                 const PACKET_PAYLOAD = document.getElementById('packet_payload').value;
+
+                p.textContent += `${PACKET}`;
+                document.getElementById('playground').append(p);
 
                 SOCKET.emit(PACKET, PACKET_PAYLOAD);
             }
