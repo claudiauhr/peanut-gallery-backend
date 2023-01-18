@@ -17,13 +17,14 @@ class Account extends APIHandler {
 
     handleRead = async (request, response) => {
 
-        const FIND = { username: request.body.username }
+        const FIND = { username: request.body.username };
 
         const ACCOUNT = await this.findFirst(FIND);
 
         if (ACCOUNT) {
 
-            if (await matchesHashed(request.body.password, ACCOUNT.password)) {
+            if (await matchesHashed(!request.body.password ? 'nothing' : request.body.password, ACCOUNT.password)) {
+                request.session.isLoggedIn = true;
 
                 return response.json(ACCOUNT);
 

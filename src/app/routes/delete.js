@@ -1,7 +1,6 @@
 import Express from "express";
 import { APIHandler } from "../controllers/api/api-handler.js";
 import Trivia from "../controllers/api/trivia.js";
-import isAuth from '../middleware/authenticated.js'
 
 /**
  * Defines the delete API router.
