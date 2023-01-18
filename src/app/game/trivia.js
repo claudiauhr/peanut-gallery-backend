@@ -36,23 +36,46 @@ export class Trivia {
      */
     join = (socketId) => {
 
-        if (this.SOCKET_CONNECTIONS.length == this.maxPlayers) return false;
+        if (this.#SOCKET_CONNECTIONS.length == this.maxPlayers) return false;
 
-        this.SOCKET_CONNECTIONS.push(socketId)
+        this.#SOCKET_CONNECTIONS.push(socketId)
 
         return true;
     }
 
+    /**
+     * Getter for the trivia schema...
+     * 
+     * @returns {triviaSchema}
+     */
     getTriviaSchema = () => {
 
         return this.#triviaSchema;
     }
 
+    getMaxPlayers = () => {
+
+        return this.#maxPlayers;
+    }
+
+    /**
+     * Binds a trivia schema to the trivia game instance.
+     * 
+     * @param {*} triviaId 
+     */
     initilizeSchema = async (triviaId) => {
 
         this.triviaSchema =  await TriviaController.findById(triviaId);
     }
 
+    /**
+     * Used to create a new trivia game instance due to async reasons.
+     * 
+     * @param {*} hostSocket 
+     * @param {*} maxPlayers 
+     * @param {*} triviaId 
+     * @returns 
+     */
     static createInstance = async (hostSocket, maxPlayers, triviaId) => {
 
         const TRIVIA_INSTANCE = new Trivia(hostSocket, maxPlayers, triviaId);
