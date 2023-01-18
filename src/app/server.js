@@ -2,8 +2,16 @@ import Express from 'express';
 import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
 import Http from 'http';
+
+import Passport from 'passport';
+import Session from 'express-session';
+import MongoStore from 'connect-mongo';
+import User from './models/user-schema.js'
+import LocalStrategy from 'passport-local'
+
+
 import { ROUTES as CREATE_ROUTER } from './routes/create.js';
-import { ROUTES as READ_ROUTER} from './routes/read.js';
+import { ROUTES as READ_ROUTER } from './routes/read.js';
 import { ROUTES as UPDATE_ROUTER } from './routes/update.js';
 import { ROUTES as DELETE_ROUTER } from './routes/delete.js';
 import { attachSocket } from './game/socket/socket.js';
@@ -28,7 +36,7 @@ DotENV.config();
 /**
  * Deconstruct environmental variables.
  */
-const { PORT, DATABASE_URI, APP_NAME } = process.env;
+const { PORT, DATABASE_URI, APP_NAME, SECRET } = process.env;
 
 /**
  * Binds general application configurations. If you don't know where to throw
@@ -69,6 +77,22 @@ const bindMiddleware = () => {
 
     // Sets the middleware for parsing json content.
     APPLICATION.use(Express.json());
+    APPLICATION.use(
+        Session({
+            secret: SECRET,
+            resave: false,
+            saveUninitialized: false,
+            store: MongoStore.create({ mongoUrl: DATABASE_URI })
+        })
+    );
+
+    APPLICATION.use(Passport.initialize());
+    APPLICATION.use(Passport.session())
+
+    const Strategy = LocalStrategy.Strategy
+    Passport.use(new Strategy(User.authenticate()));
+    Passport.serializeUser(User.serializeUser());
+    Passport.deserializeUser(User.deserializeUser());
 
     console.log(`${APP_NAME} - successfully bound middleware...`)
 }
