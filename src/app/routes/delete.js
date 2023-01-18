@@ -14,6 +14,6 @@ const DELETE_ROUTER = Express.Router();
 export const ROUTES = () => {
 
     DELETE_ROUTER.delete('/', APIHandler.handleDefault);
-    DELETE_ROUTER.delete('/trivia/:id', isAuth, Trivia.handleDelete);
+    DELETE_ROUTER.delete('/trivia/:id', Trivia.handleDelete);
     return DELETE_ROUTER;
 }

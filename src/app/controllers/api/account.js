@@ -1,13 +1,17 @@
 import { APIHandler } from "./api-handler.js";
+import { ACCOUNT_MODEL } from "../../models/account-schema.js";
 
 class Account extends APIHandler {
 
-    handleCreate = (request, response) => {
-
+    handleCreate = async (request, response) => {
         
+        const NEW_ACCOUNT = await this.create(request.body);
+
+        response.json(NEW_ACCOUNT);
     }
 
     handleRead = (request, response) => {
+
 
     }
 
@@ -20,3 +24,5 @@ class Account extends APIHandler {
     }
 
 }
+
+export default (new Account(ACCOUNT_MODEL));

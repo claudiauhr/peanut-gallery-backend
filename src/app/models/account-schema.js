@@ -25,4 +25,4 @@ const ACCOUNT_SCHEMA = new Schema({
 /**
  * Exports the schema model for use in APIHandler's.
  */
-export const ACCOUNT_MODEL = Mongoose.model('peanutGallery', ACCOUNT_SCHEMA);
+export const ACCOUNT_MODEL = Mongoose.model('accounts', ACCOUNT_SCHEMA);

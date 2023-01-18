@@ -1,7 +1,7 @@
 import Express from "express";
 import { APIHandler } from "../controllers/api/api-handler.js";
 import Trivia from "../controllers/api/trivia.js";
-import User_Schema from "../controllers/api/auth.js"
+import Account from '../controllers/api/account.js'
 import isAuth from '../middleware/authenticated.js'
 
 /**
@@ -16,7 +16,7 @@ export const ROUTES = () => {
 
     CREATE_ROUTER.post('/', APIHandler.handleDefault);
     CREATE_ROUTER.post('/trivia', isAuth, Trivia.handleCreate);
-    CREATE_ROUTER.post('/register', User_Schema.handleCreate)
+    CREATE_ROUTER.post('/register', Account.handleCreate);
 
     return CREATE_ROUTER;
 }
