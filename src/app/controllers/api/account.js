@@ -15,9 +15,31 @@ class Account extends APIHandler {
         response.json(NEW_ACCOUNT);
     }
 
-    handleRead = (request, response) => {
+    handleRead = async (request, response) => {
 
+        const FIND = { username: request.body.username }
 
+        const ACCOUNT = await this.findFirst(FIND);
+
+        if (ACCOUNT) {
+
+            if (await matchesHashed(request.body.password, ACCOUNT.password)) {
+
+                return response.json(ACCOUNT);
+
+            } else {
+
+                return response.json({
+                    error: 'You entered an invalid password!'
+                });
+
+            }
+
+        }
+
+        return response.json({
+            error: `Account for ${request.body.username} was not found!`
+        });
     }
 
     handleDelete = (request, response) => {
