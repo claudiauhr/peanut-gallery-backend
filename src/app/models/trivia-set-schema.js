@@ -56,4 +56,4 @@ const TRIVIA_SET_SCHEMA = new Schema({
 /**
  * Exports the schema model for use in APIHandler's.
  */
-export const TRIVIA_MODEL = Mongoose.model('peanutGallery', TRIVIA_SET_SCHEMA);
+export const TRIVIA_MODEL = Mongoose.model('trivias', TRIVIA_SET_SCHEMA);

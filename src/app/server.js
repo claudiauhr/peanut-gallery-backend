@@ -3,11 +3,8 @@ import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
 import Http from 'http';
 
-import Passport from 'passport';
 import Session from 'express-session';
 import MongoStore from 'connect-mongo';
-import User from './models/user-schema.js'
-import LocalStrategy from 'passport-local'
 
 
 import { ROUTES as CREATE_ROUTER } from './routes/create.js';
@@ -15,7 +12,6 @@ import { ROUTES as READ_ROUTER } from './routes/read.js';
 import { ROUTES as UPDATE_ROUTER } from './routes/update.js';
 import { ROUTES as DELETE_ROUTER } from './routes/delete.js';
 import { attachSocket } from './game/socket/socket.js';
-import { createGameSession } from './game/game-handler.js';
 
 /**
  * Express instance reference for the API.
@@ -85,14 +81,6 @@ const bindMiddleware = () => {
             store: MongoStore.create({ mongoUrl: DATABASE_URI })
         })
     );
-
-    APPLICATION.use(Passport.initialize());
-    APPLICATION.use(Passport.session())
-
-    const Strategy = LocalStrategy.Strategy
-    Passport.use(new Strategy(User.authenticate()));
-    Passport.serializeUser(User.serializeUser());
-    Passport.deserializeUser(User.deserializeUser());
 
     console.log(`${APP_NAME} - successfully bound middleware...`)
 }
