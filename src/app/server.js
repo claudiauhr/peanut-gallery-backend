@@ -2,10 +2,10 @@ import Express from 'express';
 import Mongoose from 'mongoose';
 import DotENV from 'dotenv';
 import Http from 'http';
+import cors from 'cors';
 
 import Session from 'express-session';
 import MongoStore from 'connect-mongo';
-
 
 import { ROUTES as CREATE_ROUTER } from './routes/create.js';
 import { ROUTES as READ_ROUTER } from './routes/read.js';
