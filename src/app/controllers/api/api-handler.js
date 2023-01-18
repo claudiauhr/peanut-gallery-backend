@@ -106,6 +106,22 @@ export class APIHandler {
     }
 
     /**
+     * Finds the first document entry matching the given object search pattern.
+     * 
+     * @param {*} findOf what to find
+     * @param {*} callback  optional callback.
+     * @returns mongoose findOne result.
+     */
+    findFirst = async (findOf, callback) => {
+
+        const result = await this.MODEL.findOne(findOf).catch((error) => (error));
+
+        if (Obj.is(callback, 'function')) callback(result);
+
+        return result;
+    }
+
+    /**
      * Locates a document by id if it exists.
      * 
      * @param {*} id the id of the document.
