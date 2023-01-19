@@ -14,7 +14,7 @@ const READ_ROUTER = Express.Router();
 export const ROUTES = () => {
 
     READ_ROUTER.get('/', APIHandler.handleDefault);
-    READ_ROUTER.get('/trivia/:id', Trivia.handleRead);
+    READ_ROUTER.get('/trivia', Trivia.handleRead);
     READ_ROUTER.get('/login', Account.handleRead);
 
     return READ_ROUTER;

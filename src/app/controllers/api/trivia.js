@@ -24,8 +24,8 @@ class Trivia extends APIHandler {
 
     handleRead = async (request, response) => {
 
-        const ID = request.params.id;
-        const TRIVIA_SET = await this.findById(ID);
+        const TITLE = request.body.title;
+        const TRIVIA_SET = await this.findFirst({ title: TITLE });
 
         response.json(TRIVIA_SET);
     }
@@ -36,6 +36,11 @@ class Trivia extends APIHandler {
         const EDITED_TRIVIA_SET = await this.edit(ID, request.body);
 
         response.json(EDITED_TRIVIA_SET);
+    }
+
+    handleReadAllOf = async (request, repsonse) => {
+
+        const TRIVIA_MATCHES = await this
     }
 
 }
