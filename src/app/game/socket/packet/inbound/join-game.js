@@ -13,6 +13,7 @@ class JoinGame extends Packet {
 
             socket.join(payload);
             socket.emit('joined', 'Successfully connected to session...');
+            console.log(GAME_SESSION.getConnectedPlayers());
         }
     }
 }

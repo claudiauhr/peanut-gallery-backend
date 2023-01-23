@@ -15,7 +15,7 @@ const CREATE_ROUTER = Express.Router();
 export const ROUTES = () => {
 
     CREATE_ROUTER.post('/', APIHandler.handleDefault);
-    CREATE_ROUTER.post('/trivia', authenticated, Trivia.handleCreate);
+    CREATE_ROUTER.post('/trivia', Trivia.handleCreate);
     CREATE_ROUTER.post('/register', Account.handleCreate);
 
     return CREATE_ROUTER;
