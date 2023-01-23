@@ -58,6 +58,11 @@ export class Trivia {
         return this.#maxPlayers;
     }
 
+    getConnectedPlayers = () => {
+
+        return this.#SOCKET_CONNECTIONS;
+    }
+
     /**
      * Binds a trivia schema to the trivia game instance.
      * 
