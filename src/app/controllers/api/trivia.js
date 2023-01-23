@@ -9,6 +9,7 @@ class Trivia extends APIHandler {
 
     handleCreate = async (request, response) => {
 
+        console.log(request.body)
         const TRIVIA_SET = await this.create(request.body);
 
         response.json(TRIVIA_SET);
@@ -24,7 +25,8 @@ class Trivia extends APIHandler {
 
     handleRead = async (request, response) => {
 
-        const TITLE = request.body.title;
+        console.log(request.params.id)
+        const TITLE = request.params.id;
         const TRIVIA_SET = await this.findFirst({ title: TITLE });
 
         response.json(TRIVIA_SET);
@@ -40,7 +42,7 @@ class Trivia extends APIHandler {
 
     handleReadAllOf = async (request, repsonse) => {
 
-        const TRIVIA_MATCHES = await this
+
     }
 
 }
